@@ -15,4 +15,5 @@ testing CICD with CloudHub
 5. Connect GitHub with Jenkins
 
 6. Need pom.xml changes in github to deploy app to cloudhub
+
 Connect Jenkins to CloudHub VPC
