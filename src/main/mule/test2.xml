@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="194bfe38-0223-41c7-a455-b9652ac2b15d" >
+		<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" />
+	</salesforce:sfdc-config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e337bd3f-feaf-4f69-acee-e50647647502" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" readTimeout="3000" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="ee944f2d-5061-403a-b8fe-5d32faf46376" file="config.yaml" />
+	<flow name="test2Flow" doc:id="00ff080f-a1ac-43c8-89ce-019420905ce5" >
+		<http:listener doc:name="Listener" doc:id="a301f59f-c0be-49d9-84f4-8605a28e5c38" config-ref="HTTP_Listener_config" path="createaccount" allowedMethods="GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="3ab45626-33a9-4d79-a7f9-c0d9d980ad58" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload map (item) -> {
+  Name: item.Name
+  }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:create type="Account" doc:name="Create" doc:id="8b1ab61d-4c3f-4129-9d30-dd6efcf7e7d7" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="60052fa1-cfbe-4f17-99f7-9d7d38b999c0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+  id:$.id,
+  errors:$.errors,
+  success:$.success
+
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
