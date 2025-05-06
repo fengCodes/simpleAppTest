@@ -42,7 +42,10 @@
 						<businessGroup>${business}</businessGroup>
 						<workerType>${vCore}</workerType>
 						<workers>${workers}</workers>
-						<objectStoreV2>true</objectStoreV2>
+						<objectStoreV2>true</objectStoreV2>      
+						<connectedAppClientId>4f151bb7d5f042fa930c8223a4c3bfbc</connectedAppClientId>
+					    <connectedAppClientSecret>d55f4b6d86524bd69b976559e6Cc2a46</connectedAppClientSecret>
+      					<connectedAppGrantType>client_credentials</connectedAppGrantType>
 					</cloudHubDeployment>
 					<classifier>mule-application</classifier>
 				</configuration>
