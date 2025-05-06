@@ -37,7 +37,7 @@
 						<environment>${env}</environment>
 						<applicationName>${appname}</applicationName>
 						<businessGroup>${business}</businessGroup>
-						<target>Cloudhub-US-East-1</target>
+						<target>Cloudhub-US-East-2</target>
 						<provider>MC</provider>
 						<connectedAppClientId>4f151bb7d5f042fa930c8223a4c3bfbc</connectedAppClientId>
 						<connectedAppClientSecret>d55f4b6d86524bd69b976559e6Cc2a46</connectedAppClientSecret>
